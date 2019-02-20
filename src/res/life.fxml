@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ScrollPane?>
+
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Button?>
+<?import java.net.URL?>
+<GridPane xmlns="http://javafx.com/javafx"
+  xmlns:fx="http://javafx.com/fxml"
+  fx:controller="edu.cnm.deepdive.life.controller.Life">
+
+  <stylesheets>
+
+    <URL value="@styles.css"/>
+
+  </stylesheets>
+
+  <ScrollPane
+    fx:id="viewScroller"
+    GridPane.columnIndex="0"
+    GridPane.rowIndex="0"
+    GridPane.columnSpan="3"
+    pannable="true"
+    hbarPolicy="NEVER"
+    vbarPolicy="NEVER"
+    minWidth="600"
+    maxHeight="600">
+
+
+    <!--TODO Fill in with life view-->
+
+  </ScrollPane>
+
+  <Button
+    fx:id="start"
+    GridPane.rowIndex="1"
+    GridPane.columnIndex="0"
+    text="%start"/>
+
+  <Button
+    fx:id="stop"
+    GridPane.rowIndex="1"
+    GridPane.columnIndex="1"
+    text="%stop"/>
+
+  <Button
+    fx:id="reset"
+    GridPane.rowIndex="1"
+    GridPane.columnIndex="2"
+    text="%reset"/>
+
+
+</GridPane>
