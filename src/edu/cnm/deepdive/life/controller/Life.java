@@ -8,19 +8,18 @@ import java.util.LinkedList;
 import java.util.Random;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
-import sun.rmi.server.InactiveGroupException;
 
 public class Life {
 
+  public static final int INITIAL_DENSITY = 25;
   private static final int WORLD_SIZE = 200;
 
   private World world;
@@ -28,6 +27,8 @@ public class Life {
   private Cell[][] terrain;
   private boolean running;
   private Updater updater;
+  private long initialTerrainViewWidth;
+  private long initialTerrainViewHeight;
 
   @FXML
   private ScrollPane viewScroller;
@@ -42,17 +43,15 @@ public class Life {
   @FXML
   private Button reset;
   @FXML
-  private StringProperty densityTooltipText;
-  @FXML
-  private IntegerProperty densitySliderValue;
+  private CheckBox toggleFit;
 
   @FXML
   private void initialize() {
     rng = new Random();
     updater = new Updater();
     terrain = new Cell[WORLD_SIZE][WORLD_SIZE];
-    densitySlider.valueProperty().addListener((v, oldVal, newVal) ->
-        sliderValue.setText(Long.toString(Math.round(densitySlider.getValue()))));
+    initialTerrainViewHeight = Math.round(terrainView.getHeight());
+    initialTerrainViewWidth = Math.round(terrainView.getWidth());
     reset(null);
   }
 
@@ -84,6 +83,20 @@ public class Life {
     updater.stop();
     toggleRun.setSelected(false);
     reset.setDisable(false);
+  }
+
+  @FXML
+  private void toggleFit(ActionEvent actionEvent) {
+    if (toggleFit.isSelected()) {
+      terrainView.setHeight(viewScroller.getHeight() - 2);
+      terrainView.setWidth(viewScroller.getWidth() - 2);
+    } else {
+      terrainView.setHeight(initialTerrainViewHeight);
+      terrainView.setWidth(initialTerrainViewWidth);
+    }
+    if (!running) {
+      updateDisplay();
+    }
   }
 
   private class Runner extends Thread {
