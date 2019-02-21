@@ -6,11 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.print.DocFlavor.READER;
 
 public class Main extends Application {
 
-  public static void main(String[] args) {
+private static final String RESOURCE_DIR = "res/";
+private static final String BUNDLE_NAME = RESOURCE_DIR + "ui-strings";
+private static final String LAYOUT_NAME = RESOURCE_DIR + "life.fxml";
+private static final String WINDOW_TITLE_KEY = "title";
 
+  public static void main(String[] args) {
     launch(args);
 
   }
@@ -21,9 +26,9 @@ public class Main extends Application {
     ResourceBundle bundle = ResourceBundle.getBundle("res/ui-strings");
     FXMLLoader fxmlLoader = new FXMLLoader(classLoader.getResource("res/life.fxml"), bundle);
     Parent parent = fxmlLoader.load();
-    Scene scene new Scene(parent);
+    Scene scene = new Scene(parent);
     primaryStage.setScene(scene);
-    primaryStage.setTitle("Game of Life");
+    primaryStage.setTitle(bundle.getString(WINDOW_TITLE_KEY));
     primaryStage.setResizable(false);
     primaryStage.show();
 
