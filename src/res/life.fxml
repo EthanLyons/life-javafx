@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.GridPane?>
 
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <GridPane xmlns="http://javafx.com/javafx"
   xmlns:fx="http://javafx.com/fxml"
   fx:controller="edu.cnm.deepdive.life.controller.Life">
@@ -18,6 +20,31 @@
     <URL value="@styles.css"/>
   </stylesheets>
 
+  <columnConstraints>
+    <ColumnConstraints
+      percentWidth="25"
+      halignment="LEFT"/>
+    <ColumnConstraints
+    percentWidth="25"
+    halignment="RIGHT"/>
+    <ColumnConstraints
+    percentWidth="25"
+    halignment="LEFT"/>
+    <ColumnConstraints
+    percentWidth="25"
+    halignment="RIGHT"/>
+  </columnConstraints>
+
+  <Text
+    fx:id="generationDisplay"
+    GridPane.rowIndex="0"
+    GridPane.columnIndex="0"
+    GridPane.columnSpan="2"/>
+  <Text
+    fx:id="populationDisplay"
+    GridPane.rowIndex="0"
+  GridPane.columnIndex="2"
+  GridPane.columnSpan="2"/>
   <ScrollPane
     fx:id="viewScroller"
     GridPane.columnIndex="0"

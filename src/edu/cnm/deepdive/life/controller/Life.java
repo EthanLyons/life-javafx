@@ -6,6 +6,7 @@ import edu.cnm.deepdive.life.view.WorldView;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -16,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
+import javafx.scene.text.Text;
 
 public class Life {
 
@@ -31,6 +33,10 @@ public class Life {
   private long initialTerrainViewHeight;
 
   @FXML
+  private Text generationDisplay;
+  @FXML
+  private Text populationDisplay;
+  @FXML
   private ScrollPane viewScroller;
   @FXML
   private WorldView terrainView;
@@ -44,6 +50,8 @@ public class Life {
   private Button reset;
   @FXML
   private CheckBox toggleFit;
+  @FXML
+  private ResourceBundle resources;
 
   @FXML
   private void initialize() {
@@ -59,6 +67,7 @@ public class Life {
   private void toggleRun(ActionEvent actionEvent) {
     if (toggleRun.isSelected()) {
       running = true;
+      toggleRun.setText(resources.getString("stop"));
       reset.setDisable(true);
       updater.start();
       new Runner().start();
@@ -76,11 +85,16 @@ public class Life {
   private void updateDisplay() {
     world.copyTerrain(terrain);
     terrainView.draw(terrain);
+    generationDisplay.setText(
+        String.format(resources.getString("generationDisplay"), world.getGeneration()));
+    populationDisplay.setText(
+        String.format(resources.getString("populationDisplay"), world.getPopulation()));
   }
 
   private void stop() {
     running = false;
     updater.stop();
+    toggleRun.setText(resources.getString("start"));
     toggleRun.setSelected(false);
     reset.setDisable(false);
   }
@@ -88,11 +102,11 @@ public class Life {
   @FXML
   private void toggleFit(ActionEvent actionEvent) {
     if (toggleFit.isSelected()) {
-      terrainView.setHeight(viewScroller.getHeight() - 2);
       terrainView.setWidth(viewScroller.getWidth() - 2);
+      terrainView.setHeight(viewScroller.getHeight() - 2);
     } else {
-      terrainView.setHeight(initialTerrainViewHeight);
       terrainView.setWidth(initialTerrainViewWidth);
+      terrainView.setHeight(initialTerrainViewHeight);
     }
     if (!running) {
       updateDisplay();
@@ -119,6 +133,7 @@ public class Life {
           }
         }
       }
+      Platform.runLater(() -> updateDisplay());
     }
 
   }
